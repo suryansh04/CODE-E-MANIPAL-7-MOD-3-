@@ -37,11 +37,10 @@ export default function PlaceholdersAndVanishInputDemo() {
       navigate("/learning", {
         state: {
           query: inputValue,
-          // responseData: response.data.response,
-          responseData: response.data.response.data.scenes[0].narration,
+          responseData: response.data.response.data.scenes,
         },
       });
-      console.log(response.data.response.data.scenes[1].narration);
+      console.log(response.data.response.data.scenes);
     } catch (error) {
       console.log("The error is " + error);
       setIsLoading(false);
