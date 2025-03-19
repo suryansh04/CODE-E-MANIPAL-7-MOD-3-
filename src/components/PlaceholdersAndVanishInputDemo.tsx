@@ -1,7 +1,17 @@
-import type React from "react";
+import React from "react";
 import { PlaceholdersAndVanishInput } from "./PlaceholdersAndVanishInput";
 import { SparklesCore } from "../ui/sparkles";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "ldrs/ring";
+import { ring2 } from "ldrs";
+ring2.register();
+
 export default function PlaceholdersAndVanishInputDemo() {
+  const navigate = useNavigate();
+  const [inputValue, setInputValue] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const placeholders = [
     'I am "audience" teach me this "topic"?',
     "Explain the Pythagorean Theorem with animation",
@@ -11,36 +21,34 @@ export default function PlaceholdersAndVanishInputDemo() {
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    setInputValue(e.target.value);
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submitted");
+    setIsLoading(true);
+
+    try {
+      const response = await axios.post("http://localhost:3001/input-data", {
+        data: inputValue,
+      });
+      console.log(response.data);
+
+      navigate("/learning", {
+        state: {
+          query: inputValue,
+          // responseData: response.data.response,
+          responseData: response.data.response.data.scenes[0].narration,
+        },
+      });
+      console.log(response.data.response.data.scenes[1].narration);
+    } catch (error) {
+      console.log("The error is " + error);
+      setIsLoading(false);
+    }
   };
 
   return (
-    // <div className="h-screen flex flex-col justify-center items-center px-4 bg-black">
-    //   <div className="w-full absolute inset-0 h-screen">
-    //     <SparklesCore
-    //       id="tsparticlesfullpage"
-    //       background="transparent"
-    //       minSize={0.6}
-    //       maxSize={1.4}
-    //       particleDensity={100}
-    //       className="w-full h-full"
-    //       particleColor="#FFFFFF"
-    //     />
-    //   </div>
-    // <h2 className="mb-10  text-xl text-center sm:text-5xl text-white ">
-    //   Ask Me Anything
-    // </h2>
-    // <PlaceholdersAndVanishInput
-    //   placeholders={placeholders}
-    //   onChange={handleChange}
-    //   onSubmit={onSubmit}
-    // />
-    // </div>
     <div className="h-screen relative w-full bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
       <div className="w-full absolute inset-0 h-screen">
         <SparklesCore
@@ -53,7 +61,7 @@ export default function PlaceholdersAndVanishInputDemo() {
           particleColor="#FFFFFF"
         />
       </div>
-      <h2 className="mb-10  text-xl text-center sm:text-5xl text-white ">
+      <h2 className="mb-10 text-xl text-center sm:text-5xl text-white ">
         Ask Me Anything
       </h2>
       <PlaceholdersAndVanishInput
@@ -61,6 +69,22 @@ export default function PlaceholdersAndVanishInputDemo() {
         onChange={handleChange}
         onSubmit={onSubmit}
       />
+
+      {isLoading && (
+        <div className="mt-6 flex flex-col items-center">
+          <l-ring-2
+            size="40"
+            stroke="5"
+            stroke-length="0.25"
+            bg-opacity="0.1"
+            speed="0.8"
+            color="white"
+          ></l-ring-2>
+          <p className="mt-2 text-white">
+            Generating your learning experience...
+          </p>
+        </div>
+      )}
     </div>
   );
 }
