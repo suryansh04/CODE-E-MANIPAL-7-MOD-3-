@@ -35,7 +35,6 @@ const LearningPage = () => {
   const [hasAnswered, setHasAnswered] = useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-  // Get data for current slide
   const currentSlide = FetchData[currentSlideIndex] || FetchData[0];
   const answer = currentSlide.assessment.multiple_choice.choices;
   const question = currentSlide.assessment.multiple_choice.question;
@@ -60,7 +59,6 @@ const LearningPage = () => {
     setHasAnswered(false);
   }
 
-  // Animation variants
   const slideVariants = {
     hidden: (direction: number) => ({
       x: direction > 0 ? 300 : -300,
@@ -84,12 +82,10 @@ const LearningPage = () => {
     }),
   };
 
-  // Track animation direction
   const [direction, setDirection] = useState(1);
 
-  // Modified next slide function to track direction
   function animatedNextSlide() {
-    setDirection(1); // Going forward
+    setDirection(1);
     handleNextSlide();
   }
 
@@ -189,7 +185,7 @@ const LearningPage = () => {
           </div>
 
           {/* Box 3: Narration */}
-          <div className="relative group overflow-hidden rounded-xl border border-white/10 p-6 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70">
+          <div className="relative group overflow-hidden rounded-xl border border-white/10 p-6 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70  h-[250px]">
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 via-emerald-500/20 to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]"></div>
             <div className="relative z-10 h-full">
@@ -216,7 +212,7 @@ const LearningPage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="h-36 overflow-y-auto pr-2 text-white/70 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+                className="h-[200px] overflow-y-auto pr-2 text-white/70 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
               >
                 <p>{currentSlide.narration}</p>
               </motion.div>

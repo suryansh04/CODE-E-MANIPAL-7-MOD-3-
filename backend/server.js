@@ -10,16 +10,14 @@ app.post("/input-data", async (req, res) => {
     const { data } = req.body;
     console.log("Request data:", data);
 
-    // Format data according to FastAPI's expected schema
     const response = await axios.post("http://localhost:8000/process-data", {
-      prompt: data, // Change 'data' to 'prompt' or whatever field name FastAPI expects
+      prompt: data,
     });
 
     res.json({ message: "Data sent to FastAPI", response: response.data });
   } catch (error) {
     console.log("Error forwarding to fastAPI", error.message);
 
-    // If we get a response with status, include that in the error
     if (error.response) {
       console.log("Response status:", error.response.status);
       console.log("Response data:", error.response.data);
