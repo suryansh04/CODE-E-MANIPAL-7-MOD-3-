@@ -11,11 +11,14 @@ import {
 import PlaceholdersAndVanishInputDemo from "./components/PlaceholdersAndVanishInputDemo.tsx";
 import "./App.css";
 import LearningPage from "./components/LearningPage.tsx";
+import LandingPage from "./components/LandingPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route path="" element={<PlaceholdersAndVanishInputDemo />} />
+      {/* <Route path="" element={<PlaceholdersAndVanishInputDemo />} /> */}
+
+      <Route path="" element={<LandingPage />} />
       <Route path="/learning" element={<LearningPage />} />
     </Route>
   )

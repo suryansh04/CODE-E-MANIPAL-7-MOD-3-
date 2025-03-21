@@ -60,8 +60,8 @@ export default function PlaceholdersAndVanishInputDemo() {
           particleColor="#FFFFFF"
         />
       </div>
-      <h2 className="mb-10 text-xl text-center sm:text-5xl text-white ">
-        Ask Me Anything
+      <h2 className="mb-10 text-md text-center sm:text-5xl text-white ">
+        What do you want to learn?
       </h2>
       <PlaceholdersAndVanishInput
         placeholders={placeholders}
