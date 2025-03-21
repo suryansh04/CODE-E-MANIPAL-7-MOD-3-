@@ -299,8 +299,7 @@ const LearningPage = () => {
   const answer = currentSlide.assessment.multiple_choice.choices;
   const question = currentSlide.assessment.multiple_choice.question;
   const correctAnswerIndex =
-    currentSlide.assessment.multiple_choice.correctAnswerIndex;
-
+    currentSlide.assessment.multiple_choice.correct_index;
   function handleAnswerClick(currIndex: number) {
     setSelectedAnswerIndex(currIndex);
     setHasAnswered(true);
